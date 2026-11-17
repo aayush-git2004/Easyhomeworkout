@@ -1,0 +1,63 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { exercises } from '../../data/exercises';
+
+export function getStaticPaths() {
+  return exercises.map((exercise) => ({ params: { slug: exercise.slug }, props: { exercise } }));
+}
+
+const { exercise } = Astro.props;
+---
+
+<Layout title={exercise.name} description={`${exercise.name}: setup, step-by-step instructions, levels, sets, rest, and common mistakes.`}>
+  <section class="page-hero">
+    <div class="wrap">
+      <a class="card-link" href="/exercises/">&#8592; All exercises</a>
+      <span class="eyebrow" style="display:flex;margin-top:24px">{exercise.category} · {exercise.muscles}</span>
+      <h1>{exercise.name}</h1>
+      <p>Follow the movement at a level that suits your current experience. Use controlled repetitions and stop if you feel pain.</p>
+      <div class="meta">{exercise.levels.map((level) => <span class="pill">{level}</span>)}</div>
+    </div>
+  </section>
+  <section class="content-section">
+    <div class="wrap detail-layout">
+      <div>
+        <section class="panel">
+          <span class="eyebrow">Get set</span>
+          <h2>Starting position</h2>
+          <ul class="checklist">{exercise.starting.map((item) => <li>{item}</li>)}</ul>
+          <p><strong>Equipment:</strong> {exercise.equipment}</p>
+        </section>
+        <section class="panel">
+          <span class="eyebrow">Move with control</span>
+          <h2>How to perform</h2>
+          <ol class="checklist">{exercise.steps.map((step) => <li>{step}</li>)}</ol>
+        </section>
+        <section class="panel">
+          <h2>Sets, repetitions, and rest</h2>
+          <div class="callout"><strong>Recommended:</strong> {exercise.prescription}<br /><strong>Rest between sets:</strong> {exercise.rest}</div>
+          <p class="notice">These are general exercise recommendations. Choose a variation and amount you can do with control; take more rest or stop when needed.</p>
+        </section>
+        <section class="panel">
+          <h2>Common mistakes</h2>
+          <ul class="checklist">{exercise.mistakes.map((mistake) => <li>{mistake}</li>)}</ul>
+        </section>
+        {exercise.safety && <div class="callout"><strong>Safety note:</strong> {exercise.safety}</div>}
+      </div>
+      <aside>
+        <div class="panel">
+          <span class="eyebrow">Exercise details</span>
+          <h2>{exercise.category}</h2>
+          <p><strong>Target muscles:</strong> {exercise.muscles}</p>
+          <p><strong>Experience levels:</strong> {exercise.levels.join(', ')}</p>
+          <p><strong>Equipment:</strong> {exercise.equipment}</p>
+          <a class="btn" href="/workouts/">Find a workout &#8599;</a>
+        </div>
+        <div class="panel">
+          <h3>Browse another group</h3>
+          <a class="card-link" href="/exercises/">Back to the exercise library &#8599;</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const topics = [
+  ['Understanding calories', 'Calories describe the energy in food and drink. Your body uses energy for basic functions and everyday activity. Energy needs differ, so online estimates are only a general reference.'],
+  ['Protein', 'Protein supports many body functions. Sources include beans, lentils, chickpeas, soy foods such as tofu, eggs, dairy foods, fish, and meat. Choose options that fit your preferences and dietary needs.'],
+  ['Carbohydrates', 'Carbohydrates are an important energy source. Oats, rice, corn, potatoes, bread, pasta, fruits, vegetables, and legumes all contain carbohydrates. Whole or minimally processed options often also provide fiber.'],
+  ['Dietary fats', 'Fats are part of a balanced diet and help the body absorb some vitamins. Unsaturated fat sources include nuts, seeds, avocado, and many plant oils; oily fish also contains unsaturated fats.'],
+  ['Fiber and varied foods', 'Fiber is found in foods such as beans, lentils, whole grains, fruits, vegetables, nuts, and seeds. Eating a variety of foods can help provide different nutrients. Increase fiber gradually if you are not used to it.'],
+  ['Hydration', 'Drink regularly in response to thirst, activity, and conditions such as hot weather. Fluid needs vary, and some people have medical reasons to follow specific fluid guidance.'],
+  ['Before activity', 'If you feel hungry before exercise, a familiar snack with carbohydrates—such as fruit, toast, or yogurt with cereal—may feel comfortable. Timing and preferences vary.'],
+  ['After activity', 'A usual meal or snack containing carbohydrates and protein can fit into recovery. Everyday workouts do not automatically require special supplements.'],
+  ['Balanced meals', 'A flexible meal can combine vegetables or fruit, a protein source, and a grain or other starchy food. This is a general planning idea, not a required formula or portion prescription.']
+];
+---
+
+<Layout title="Nutrition Guide" description="Straightforward nutrition basics and adaptable meal ideas using familiar foods from around the world.">
+  <section class="page-hero">
+    <div class="wrap">
+      <span class="eyebrow">Food basics, made clearer</span>
+      <h1>Nutrition that fits everyday life.</h1>
+      <p>Learn the basics of food and nutrients with flexible examples you can adapt to your culture, budget, preferences, and local ingredients.</p>
+    </div>
+  </section>
+  <section class="content-section">
+    <div class="wrap">
+      <div class="callout">This page offers general education, not medical advice or a personalized meal plan. Nutrition needs vary with age, health, activity, and other individual factors. Ask a qualified health professional for personal guidance.</div>
+      <div class="nutrition-grid">
+        {topics.map(([title, description]) => <article class="nutrition-item"><h3>{title}</h3><p>{description}</p></article>)}
+      </div>
+      <section class="panel" style="margin-top:24px">
+        <span class="eyebrow">Choose what is available to you</span>
+        <h2>Flexible food examples</h2>
+        <div class="grid-4">
+          <div><h3>Grains and starchy foods</h3><p>Oats, rice, bread, pasta, corn, potatoes, cassava, or other regional staples.</p></div>
+          <div><h3>Protein foods</h3><p>Beans, lentils, chickpeas, peas, tofu, eggs, yogurt, fish, chicken, or other meats.</p></div>
+          <div><h3>Vegetables and fruit</h3><p>Fresh, frozen, or canned options such as leafy greens, tomatoes, carrots, squash, apples, bananas, or local seasonal produce.</p></div>
+          <div><h3>Fats and flavor</h3><p>Nuts, seeds, avocado, plant oils, herbs, spices, and sauces that suit your taste and food traditions.</p></div>
+        </div>
+        <p class="notice" style="margin-top:18px">These are examples, not a required shopping list. Choose foods that are accessible and appropriate for your dietary needs.</p>
+      </section>
+      <section class="panel">
+        <span class="eyebrow">An adaptable example</span>
+        <h2>Build a day from familiar foods</h2>
+        <div class="grid-4">
+          <div><h3>Breakfast</h3><p>Oats with milk or a fortified alternative and fruit; or eggs with bread and vegetables.</p></div>
+          <div><h3>Lunch</h3><p>Rice, bread, corn, or another staple with beans, lentils, tofu, fish, or meat and vegetables.</p></div>
+          <div><h3>Snack</h3><p>Fruit, yogurt, nuts, seeds, or another snack that fits your appetite and routine.</p></div>
+          <div><h3>Dinner</h3><p>Pasta, potatoes, grains, or a regional staple with vegetables and a protein food you enjoy.</p></div>
+        </div>
+        <p class="notice" style="margin-top:16px">Meal patterns and portions differ across people and cultures. Adapt these examples; they are not a prescribed meal plan.</p>
+      </section>
+      <section class="panel">
+        <h2>Healthy eating habits</h2>
+        <ul class="checklist">
+          <li>Include variety over time instead of expecting every meal to be perfect.</li>
+          <li>Choose mostly minimally processed foods when they are available and suit your needs.</li>
+          <li>Make changes gradually and choose habits you can maintain.</li>
+          <li>Be cautious of crash diets, extreme restriction, and supplements promising quick or guaranteed results.</li>
+          <li>There is no single “perfect” food or eating pattern for everyone.</li>
+        </ul>
+      </section>
+    </div>
+  </section>
+</Layout>

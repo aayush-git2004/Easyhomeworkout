@@ -1,0 +1,68 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { goals } from '../../data/goals';
+
+export function getStaticPaths() {
+  return goals.map((goal) => ({ params: { slug: goal.slug }, props: { goal } }));
+}
+
+const { goal } = Astro.props;
+---
+
+<Layout title={goal.title} description={goal.intro}>
+  <section class="page-hero">
+    <div class="wrap">
+      <a class="card-link" href="/#fitness-goals">&#8592; Browse fitness goals</a>
+      <span class="eyebrow" style="display:flex;margin-top:24px">{goal.eyebrow}</span>
+      <h1>{goal.title}</h1>
+      <p>{goal.intro}</p>
+    </div>
+  </section>
+  <section class="content-section">
+    <div class="wrap">
+      <div class="section-head">
+        <div><span class="eyebrow">A practical starting point</span><h2>Tips to help you get started</h2></div>
+        <p>Use the ideas that fit you. You can adjust your routine as your experience and circumstances change.</p>
+      </div>
+      <div class="grid-4">
+        {goal.tips.map(([title, description], index) => <article class="card feature-card">
+          <div class="step-num">{String(index + 1).padStart(2, '0')}</div>
+          <h3>{title}</h3>
+          <p>{description}</p>
+        </article>)}
+      </div>
+      <div class="detail-layout" style="margin-top:28px">
+        <section class="panel">
+          <span class="eyebrow">Try a simple session</span>
+          <h2>Example routine</h2>
+          <p>This is an optional example. Start with fewer rounds or take extra rest if that feels better.</p>
+          {goal.routine.map(([name, dose], index) => <div class="exercise-row">
+            <span class="pill">{String(index + 1).padStart(2, '0')}</span>
+            <h3 style="margin-top:10px">{name}</h3>
+            <p>{dose}</p>
+          </div>)}
+          <div class="callout">{goal.note}</div>
+        </section>
+        <aside class="panel">
+          <span class="eyebrow">Keep exploring</span>
+          <h2>Recommended for this goal</h2>
+          {goal.workoutLinks.map(([label, href]) => <p><a class="card-link" href={href}>{label} &#8599;</a></p>)}
+          <a class="btn btn-light" href="/progress/">Track your progress</a>
+        </aside>
+      </div>
+      <section style="margin-top:48px">
+        <span class="eyebrow">Explore another direction</span>
+        <h2>Other fitness goal guides</h2>
+        <div class="grid-3">
+          {goals.filter((item) => item.slug !== goal.slug).map((item) => <a class="card feature-card" href={`/goals/${item.slug}/`}>
+            <h3>{item.title}</h3><p>{item.intro}</p><span class="card-link">Open guide &#8599;</span>
+          </a>)}
+        </div>
+      </section>
+      <div class="banner" style="margin-top:28px">
+        <div><h2>Take one manageable step.</h2><p>Pick a session that feels appropriate today. Progress can be as simple as showing up again when you’re ready.</p></div>
+        <a class="btn btn-lime" href="/workouts/">Browse workouts &#8599;</a>
+      </div>
+    </div>
+  </section>
+</Layout>

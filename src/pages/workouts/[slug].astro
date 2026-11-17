@@ -1,0 +1,74 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { workouts } from '../../data/workouts';
+
+export function getStaticPaths() {
+  return workouts.map((workout) => ({ params: { slug: workout.slug }, props: { workout } }));
+}
+
+const { workout } = Astro.props;
+---
+
+<Layout title={workout.title} description={workout.desc}>
+  <section class="page-hero">
+    <div class="wrap">
+      <a class="card-link" href="/workouts/">&#8592; All workouts</a>
+      <span class="eyebrow" style="display:flex;margin-top:24px">{workout.level} · {workout.duration}</span>
+      <h1>{workout.title}</h1>
+      <p>{workout.desc}</p>
+    </div>
+  </section>
+  <section class="content-section">
+    <div class="wrap detail-layout">
+      <div>
+        <section class="panel">
+          <h2>Before you begin</h2>
+          <p><strong>Objective:</strong> {workout.objective}</p>
+          <p><strong>Equipment:</strong> {workout.equipment}</p>
+          <h3>Warm-up</h3>
+          <ul class="checklist">{workout.warmup.map((item) => <li>{item}</li>)}</ul>
+          <div class="callout">{workout.safety}</div>
+        </section>
+        <section class="panel">
+          <h2>Your workout</h2>
+          {workout.moves.map((item, index) => <article class="exercise-row">
+            <span class="pill">{String(index + 1).padStart(2, '0')}</span>
+            <h3 style="margin-top:10px">{item.name}</h3>
+            <p><strong>{item.dose}</strong></p>
+            <h4>How to perform</h4>
+            <ol class="checklist">{item.steps.map((step) => <li>{step}</li>)}</ol>
+            <p><strong>Rest:</strong> {item.rest}</p>
+            <p class="notice"><strong>Avoid:</strong> {item.avoid}</p>
+          </article>)}
+        </section>
+        <section class="panel">
+          <h2>After your workout</h2>
+          <h3>Cool-down</h3>
+          <ul class="checklist">{workout.cooldown.map((item) => <li>{item}</li>)}</ul>
+          <p>{workout.closing}</p>
+          <button id="complete" class="btn">Mark workout complete</button>
+          <p id="complete-msg" class="result" aria-live="polite"></p>
+        </section>
+      </div>
+      <aside>
+        <img style="width:100%;height:270px;object-fit:cover;border-radius:22px;margin-bottom:18px" src={`https://images.unsplash.com/${workout.image}?auto=format&fit=crop&w=900&q=80`} alt={`${workout.title} home workout`} />
+        <div class="panel">
+          <h3>Workout details</h3>
+          <p>Difficulty: <strong>{workout.level}</strong></p>
+          <p>Duration: <strong>{workout.duration}</strong></p>
+          <p>Focus: <strong>{workout.focus}</strong></p>
+          <p>Equipment: <strong>{workout.equipment}</strong></p>
+        </div>
+      </aside>
+    </div>
+  </section>
+  <script is:inline define:vars={{ title: workout.title }}>
+    document.querySelector('#complete')?.addEventListener('click', () => {
+      const history = JSON.parse(localStorage.getItem('fhw-workouts') || '[]');
+      history.push({ title, date: new Date().toISOString() });
+      localStorage.setItem('fhw-workouts', JSON.stringify(history));
+      document.querySelector('#complete-msg').textContent = 'Workout saved to your progress on this device. Nice work!';
+      document.querySelector('#complete').textContent = 'Completed';
+    });
+  </script>
+</Layout>

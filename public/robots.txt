@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://freehomeworkout.com/sitemap.xml
